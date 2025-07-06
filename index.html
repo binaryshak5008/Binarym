@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Binary Screenshot Analyzer</title>
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>📈 Binary Screenshot Analyzer</h1>
+    <form action="/analyze" method="POST" enctype="multipart/form-data">
+      <input type="file" id="upload" name="screenshot" accept="image/*" required />
+      <br/>
+      <img id="preview" src="#" alt="Preview" style="display:none; max-width: 300px; margin-top: 20px;"/>
+      <br/>
+      <button type="submit">Analyze Screenshot</button>
+    </form>
+    {% if signal %}
+      <div class="result">
+        <h2>Signal: <span>{{ signal }}</span></h2>
+      </div>
+    {% endif %}
+    <script>
+      document.getElementById("upload").onchange = function (evt) {
+        const [file] = this.files;
+        if (file) {
+          const preview = document.getElementById("preview");
+          preview.src = URL.createObjectURL(file);
+          preview.style.display = "block";
+        }
+      };
+    </script>
+  </div>
+</body>
+</html>
